@@ -49,6 +49,11 @@ header model =
         , div [ class "ls3 b f1-ns f2 lh-title tc mb5-ns mb3" ]
             [ text "Hi, my name is Marc." ]
         , div [ class "fw1 ls1 measure-wide lh-copy tc-ns tj pl2 pr2 center" ] [ text headerText ]
-        , div [ class "mt5-ns mt4 tc mb6" ]
+        , a
+            [ class "mt4-ns f5-ns mt2 o-60 center tc glow white no-underline hover\n            mw5\n          pr3 pl3 ba bw1 br-pill pa2"
+            , href "#contact"
+            ]
+            [ text "Contact" ]
+        , div [ class "mt4-ns mt4 tc mb6" ]
             [ a [ href "#feature", class "bounce oln o-60 glow link chevron-down no-underline white fas fa-3x fa-chevron-down" ] [] ]
         ]

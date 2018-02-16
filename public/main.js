@@ -9338,29 +9338,48 @@ var _user$project$View_Header$header = function (model) {
 					_1: {
 						ctor: '::',
 						_0: A2(
-							_elm_lang$html$Html$div,
+							_elm_lang$html$Html$a,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('mt5-ns mt4 tc mb6'),
-								_1: {ctor: '[]'}
+								_0: _elm_lang$html$Html_Attributes$class('mt4-ns f5-ns mt2 o-60 center tc glow white no-underline hover\n            mw5\n          pr3 pl3 ba bw1 br-pill pa2'),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$href('#contact'),
+									_1: {ctor: '[]'}
+								}
 							},
 							{
 								ctor: '::',
-								_0: A2(
-									_elm_lang$html$Html$a,
-									{
-										ctor: '::',
-										_0: _elm_lang$html$Html_Attributes$href('#feature'),
-										_1: {
-											ctor: '::',
-											_0: _elm_lang$html$Html_Attributes$class('bounce oln o-60 glow link chevron-down no-underline white fas fa-3x fa-chevron-down'),
-											_1: {ctor: '[]'}
-										}
-									},
-									{ctor: '[]'}),
+								_0: _elm_lang$html$Html$text('Contact'),
 								_1: {ctor: '[]'}
 							}),
-						_1: {ctor: '[]'}
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$class('mt4-ns mt4 tc mb6'),
+									_1: {ctor: '[]'}
+								},
+								{
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$a,
+										{
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$href('#feature'),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$class('bounce oln o-60 glow link chevron-down no-underline white fas fa-3x fa-chevron-down'),
+												_1: {ctor: '[]'}
+											}
+										},
+										{ctor: '[]'}),
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
@@ -9525,8 +9544,12 @@ var _user$project$View_ContactForm$contactForm = function (model) {
 		_elm_lang$html$Html$div,
 		{
 			ctor: '::',
-			_0: _elm_lang$html$Html_Attributes$class('w-100 center mw6-ns pa3-ns ph5-ns mb4'),
-			_1: {ctor: '[]'}
+			_0: _elm_lang$html$Html_Attributes$id('contact'),
+			_1: {
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('w-100 center mw6-ns pa3-ns ph5-ns mb4'),
+				_1: {ctor: '[]'}
+			}
 		},
 		{
 			ctor: '::',
