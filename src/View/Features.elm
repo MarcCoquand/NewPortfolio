@@ -82,7 +82,7 @@ customizable =
 
 The websites I create are created from scratch. This means that there is a
 greater flexibility in what would be possible than other vendors that create
-their website in Wordpress and othe WYIWYG editors.
+their website in Wordpress and other WYIWYG editors.
 
 """
 
