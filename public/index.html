@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+    </style>
+    <title>Marc Coquand's Portfolio</title>
+  </head>
+
+  <div id="main"></div>
+  <link rel="stylesheet" href="main.css"/>
+  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+  <link rel="stylesheet" href="custom.css"/>
+  <script src="main.js"></script>
+  <script>
+    var node = document.getElementById('main');
+    var app = Elm.Main.embed(node);
+    var headerImg = new Image();
+    headerImg.addEventListener('load',
+        () => {app.ports.headerImg.send(true)}, false);
+    headerImg.src = "img/bg.jpg";
+  </script>
+</html>
