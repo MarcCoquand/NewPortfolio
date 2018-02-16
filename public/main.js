@@ -9313,7 +9313,7 @@ var _user$project$View_Header$header = function (model) {
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('ls3 b f1-ns f2 lh-title tc mb5-ns mb3'),
+						_0: _elm_lang$html$Html_Attributes$class('ls3 b f1-ns f3 lh-title tc mb5-ns mb3 pr3 pl3 pl2-ns pr3-ns'),
 						_1: {ctor: '[]'}
 					},
 					{
@@ -9327,7 +9327,7 @@ var _user$project$View_Header$header = function (model) {
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('fw1 ls1 measure-wide lh-copy tc-ns tj pl2 pr2 center'),
+							_0: _elm_lang$html$Html_Attributes$class('fw1 f5-ns f6 ls1 measure-wide lh-copy tc-ns tj pl3 pr3 pl2-ns pr3-ns center'),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -9341,7 +9341,7 @@ var _user$project$View_Header$header = function (model) {
 							_elm_lang$html$Html$a,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('mt4-ns f5-ns mt2 o-60 center tc glow white no-underline hover\n            mw5\n          pr3 pl3 ba bw1 br-pill pa2'),
+								_0: _elm_lang$html$Html_Attributes$class('f5-ns mt4 o-60 center tc glow white no-underline hover mw5 pr3 pl3 ba bw1 br-pill pa2'),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$href('#contact'),
@@ -9359,7 +9359,7 @@ var _user$project$View_Header$header = function (model) {
 								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('mt4-ns mt4 tc mb6'),
+									_0: _elm_lang$html$Html_Attributes$class('mt4 tc mb6'),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -9419,7 +9419,7 @@ var _user$project$View_Features$feature = F2(
 			_elm_lang$html$Html$div,
 			{
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('w-100 pa3-ns mr2-ns w-100 flex items-center flex-row flex-column-l'),
+				_0: _elm_lang$html$Html_Attributes$class('w-100 pa3-ns mb4 flex items-center flex-row-m flex-column'),
 				_1: {ctor: '[]'}
 			},
 			{
@@ -9428,9 +9428,12 @@ var _user$project$View_Features$feature = F2(
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class(
-							A2(_elm_lang$core$Basics_ops['++'], 'flex tc w-30 center ', icon)),
-						_1: {ctor: '[]'}
+						_0: _elm_lang$html$Html_Attributes$class('flex tc w-30 center mb2'),
+						_1: {
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class(icon),
+							_1: {ctor: '[]'}
+						}
 					},
 					{ctor: '[]'}),
 				_1: {
@@ -9439,7 +9442,7 @@ var _user$project$View_Features$feature = F2(
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('flex lh-copy ls1 w-70 fw1 tl f6 fl center '),
+							_0: _elm_lang$html$Html_Attributes$class('flex lh-copy ls1 w-90 fw1 tl mw6-m f6 fl center '),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -9450,6 +9453,50 @@ var _user$project$View_Features$feature = F2(
 								feat),
 							_1: {ctor: '[]'}
 						}),
+					_1: {ctor: '[]'}
+				}
+			});
+	});
+var _user$project$View_Features$featureLeft = F2(
+	function (feat, icon) {
+		return A2(
+			_elm_lang$html$Html$div,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('w-100 pa3-ns flex flex-column-reverse items-center\n            justify-end flex-row-m justify-start-m mb4'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$div,
+					{
+						ctor: '::',
+						_0: _elm_lang$html$Html_Attributes$class('flex lh-copy self-start-l dib v-top mw6-m ls1 w-90 fw1 tl f6 fl center'),
+						_1: {ctor: '[]'}
+					},
+					{
+						ctor: '::',
+						_0: A2(
+							_evancz$elm_markdown$Markdown$toHtml,
+							{ctor: '[]'},
+							feat),
+						_1: {ctor: '[]'}
+					}),
+				_1: {
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$class('flex tc w-30 center mb2'),
+							_1: {
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$class(icon),
+								_1: {ctor: '[]'}
+							}
+						},
+						{ctor: '[]'}),
 					_1: {ctor: '[]'}
 				}
 			});
@@ -9468,7 +9515,7 @@ var _user$project$View_Features$features = function (model) {
 			_0: _elm_lang$html$Html_Attributes$id('feature'),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('white pa5-ns pa4'),
+				_0: _elm_lang$html$Html_Attributes$class('white pa3-ns pa1'),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$style(
@@ -9500,7 +9547,7 @@ var _user$project$View_Features$features = function (model) {
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('b f3 ls2 tc w-100 mb5'),
+							_0: _elm_lang$html$Html_Attributes$class('b f3-ns f4 ls2 tc w-100 mb5 mt3'),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -9522,7 +9569,7 @@ var _user$project$View_Features$features = function (model) {
 								_0: A2(_user$project$View_Features$feature, _user$project$View_Features$rightDesign, 'fas fa-3x fa-check'),
 								_1: {
 									ctor: '::',
-									_0: A2(_user$project$View_Features$feature, _user$project$View_Features$fast, 'fas fa-rocket fa-3x'),
+									_0: A2(_user$project$View_Features$featureLeft, _user$project$View_Features$fast, 'fas fa-rocket fa-3x'),
 									_1: {
 										ctor: '::',
 										_0: A2(_user$project$View_Features$feature, _user$project$View_Features$customizable, 'fas fa-3x fa-sliders-h'),
