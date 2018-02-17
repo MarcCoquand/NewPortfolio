@@ -4,3 +4,4 @@ elm-stuff/*
 .ctrlp
 .firebaserc 
 elm-stuff/*
+node_modules/
