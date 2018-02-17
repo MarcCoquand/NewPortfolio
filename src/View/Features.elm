@@ -80,11 +80,16 @@ customizable =
     """
 ### Have it just the way you want
 
-The websites I create are created from scratch. This means that there is a
-greater flexibility in what would be possible than other vendors that create
+The websites I create are full-stack solutions created from scratch. This means that there are
+more possibilities in what can be done than other vendors that create
 their website in Wordpress and other WYIWYG editors.
 
 """
+
+
+codeIcon : String
+codeIcon =
+    "fas fa-code"
 
 
 

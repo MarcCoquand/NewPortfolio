@@ -4,6 +4,7 @@
 module Update.Update exposing (update)
 
 import Types.Types as Types exposing (..)
+import Ports.Firebase as Firebase exposing (..)
 
 
 update : Types.Msg -> Types.Model -> ( Types.Model, Cmd Types.Msg )
@@ -40,5 +41,9 @@ update msg model =
                 , contactFormEmail = ""
                 , contactFormMessage = ""
               }
-            , Cmd.none
+            , Firebase.sendContactInfo
+                { contactFormName = model.contactFormName
+                , contactFormEmail = model.contactFormEmail
+                , contactFormMessage = model.contactFormMessage
+                }
             )

@@ -9201,6 +9201,12 @@ var _user$project$Subscriptions_Subscriptions$subscriptions = function (model) {
 	return _user$project$Ports_Onload$headerImg(_user$project$Types_Types$HeaderImgLoaded);
 };
 
+var _user$project$Ports_Firebase$sendContactInfo = _elm_lang$core$Native_Platform.outgoingPort(
+	'sendContactInfo',
+	function (v) {
+		return {contactFormMessage: v.contactFormMessage, contactFormEmail: v.contactFormEmail, contactFormName: v.contactFormName};
+	});
+
 var _user$project$Update_Update$update = F2(
 	function (msg, model) {
 		var _p0 = msg;
@@ -9253,7 +9259,8 @@ var _user$project$Update_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{contactFormName: '', contactFormEmail: '', contactFormMessage: ''}),
-					_1: _elm_lang$core$Platform_Cmd$none
+					_1: _user$project$Ports_Firebase$sendContactInfo(
+						{contactFormName: model.contactFormName, contactFormEmail: model.contactFormEmail, contactFormMessage: model.contactFormMessage})
 				};
 		}
 	});
@@ -9341,7 +9348,7 @@ var _user$project$View_Header$header = function (model) {
 							_elm_lang$html$Html$a,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('f5-ns mt4 o-60 center tc glow white no-underline hover mw5 pr3 pl3 ba bw1 br-pill pa2'),
+								_0: _elm_lang$html$Html_Attributes$class('f5-ns mt4 o-60  center tc glow white no-underline hover greenhover mw5 pr3 pl3 ba bw1 br-pill pa2'),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$href('#contact'),
@@ -9359,7 +9366,7 @@ var _user$project$View_Header$header = function (model) {
 								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('mt4 tc mb6'),
+									_0: _elm_lang$html$Html_Attributes$class('mt4 mt5-l tc mb6'),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -9501,7 +9508,8 @@ var _user$project$View_Features$featureLeft = F2(
 				}
 			});
 	});
-var _user$project$View_Features$customizable = '\n### Have it just the way you want\n\nThe websites I create are created from scratch. This means that there is a\ngreater flexibility in what would be possible than other vendors that create\ntheir website in Wordpress and othe WYIWYG editors.\n\n';
+var _user$project$View_Features$codeIcon = 'fas fa-code';
+var _user$project$View_Features$customizable = '\n### Have it just the way you want\n\nThe websites I create are full-stack solutions created from scratch. This means that there are\nmore possibilities in what can be done than other vendors that create\ntheir website in Wordpress and other WYIWYG editors.\n\n';
 var _user$project$View_Features$fast = '\n### Blazing fast\n\nA website that takes more than 2 seconds to load has a page abondonment of 15%\nor higher. I ensure that your website loads in less than half a second.\n\n';
 var _user$project$View_Features$lowMaintenance = '\n### Very low maintenance\n\nThe websites I create have very low maintenance, if any at all.\n\n';
 var _user$project$View_Features$furtherDevelopment = '\n### Reuse the backend for your mobile apps\n\nChoosing the right technology stack can be important to avoid having to\nduplicate your development in the future. The code used to create the backend\nserver used for my websites can later be reused for Android and iOS apps.\n\n';
@@ -9594,7 +9602,7 @@ var _user$project$View_ContactForm$contactForm = function (model) {
 			_0: _elm_lang$html$Html_Attributes$id('contact'),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('w-100 center mw6-ns pa3-ns ph5-ns mb4'),
+				_0: _elm_lang$html$Html_Attributes$class('w-100 center mw6-ns pa3-ns ph5-ns mb2 mb6-ns'),
 				_1: {ctor: '[]'}
 			}
 		},

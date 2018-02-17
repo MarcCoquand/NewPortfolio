@@ -58,10 +58,10 @@ header model =
             [ text headerText ]
         , a
             [ class
-                """f5-ns mt4 o-60 center tc glow white no-underline hover mw5 pr3 pl3 ba bw1 br-pill pa2"""
+                """f5-ns mt4 o-60  center tc glow white no-underline hover greenhover mw5 pr3 pl3 ba bw1 br-pill pa2"""
             , href "#contact"
             ]
             [ text "Contact" ]
-        , div [ class "mt4 tc mb6" ]
+        , div [ class "mt4 mt5-l tc mb6" ]
             [ a [ href "#feature", class "bounce oln o-60 glow link chevron-down no-underline white fas fa-3x fa-chevron-down" ] [] ]
         ]

@@ -8,7 +8,7 @@ import Html.Events exposing (..)
 
 contactForm : Types.Model -> Html Types.Msg
 contactForm model =
-    div [ id "contact", class "w-100 center mw6-ns pa3-ns ph5-ns mb4" ]
+    div [ id "contact", class "w-100 center mw6-ns pa3-ns ph5-ns mb2 mb6-ns" ]
         [ div [ class "f5 tc mb3" ] [ text "Let's get in touch:" ]
         , input
             [ class "fl w-50-ns w-100 pa2 ba b--light-gray"

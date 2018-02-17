@@ -30,6 +30,9 @@
     to   { opacity: 1; }
 }
 
+greenhover::hover {
+    color:rgb(72 177 119);
+}
 
 .pulse {
   margin:100px;

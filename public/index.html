@@ -12,12 +12,6 @@
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="custom.css"/>
   <script src="main.js"></script>
-  <script>
-    var node = document.getElementById('main');
-    var app = Elm.Main.embed(node);
-    var headerImg = new Image();
-    headerImg.addEventListener('load',
-        () => {app.ports.headerImg.send(true)}, false);
-    headerImg.src = "img/bg.jpg";
-  </script>
+  <script src="https://www.gstatic.com/firebasejs/4.10.0/firebase.js"></script>
+  <script src="index.js"></script>
 </html>
