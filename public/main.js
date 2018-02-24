@@ -7961,6 +7961,418 @@ var _elm_lang$html$Html$summary = _elm_lang$html$Html$node('summary');
 var _elm_lang$html$Html$menuitem = _elm_lang$html$Html$node('menuitem');
 var _elm_lang$html$Html$menu = _elm_lang$html$Html$node('menu');
 
+var _elm_lang$core$Task$onError = _elm_lang$core$Native_Scheduler.onError;
+var _elm_lang$core$Task$andThen = _elm_lang$core$Native_Scheduler.andThen;
+var _elm_lang$core$Task$spawnCmd = F2(
+	function (router, _p0) {
+		var _p1 = _p0;
+		return _elm_lang$core$Native_Scheduler.spawn(
+			A2(
+				_elm_lang$core$Task$andThen,
+				_elm_lang$core$Platform$sendToApp(router),
+				_p1._0));
+	});
+var _elm_lang$core$Task$fail = _elm_lang$core$Native_Scheduler.fail;
+var _elm_lang$core$Task$mapError = F2(
+	function (convert, task) {
+		return A2(
+			_elm_lang$core$Task$onError,
+			function (_p2) {
+				return _elm_lang$core$Task$fail(
+					convert(_p2));
+			},
+			task);
+	});
+var _elm_lang$core$Task$succeed = _elm_lang$core$Native_Scheduler.succeed;
+var _elm_lang$core$Task$map = F2(
+	function (func, taskA) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return _elm_lang$core$Task$succeed(
+					func(a));
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map2 = F3(
+	function (func, taskA, taskB) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return _elm_lang$core$Task$succeed(
+							A2(func, a, b));
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map3 = F4(
+	function (func, taskA, taskB, taskC) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return _elm_lang$core$Task$succeed(
+									A3(func, a, b, c));
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map4 = F5(
+	function (func, taskA, taskB, taskC, taskD) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									function (d) {
+										return _elm_lang$core$Task$succeed(
+											A4(func, a, b, c, d));
+									},
+									taskD);
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$map5 = F6(
+	function (func, taskA, taskB, taskC, taskD, taskE) {
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (a) {
+				return A2(
+					_elm_lang$core$Task$andThen,
+					function (b) {
+						return A2(
+							_elm_lang$core$Task$andThen,
+							function (c) {
+								return A2(
+									_elm_lang$core$Task$andThen,
+									function (d) {
+										return A2(
+											_elm_lang$core$Task$andThen,
+											function (e) {
+												return _elm_lang$core$Task$succeed(
+													A5(func, a, b, c, d, e));
+											},
+											taskE);
+									},
+									taskD);
+							},
+							taskC);
+					},
+					taskB);
+			},
+			taskA);
+	});
+var _elm_lang$core$Task$sequence = function (tasks) {
+	var _p3 = tasks;
+	if (_p3.ctor === '[]') {
+		return _elm_lang$core$Task$succeed(
+			{ctor: '[]'});
+	} else {
+		return A3(
+			_elm_lang$core$Task$map2,
+			F2(
+				function (x, y) {
+					return {ctor: '::', _0: x, _1: y};
+				}),
+			_p3._0,
+			_elm_lang$core$Task$sequence(_p3._1));
+	}
+};
+var _elm_lang$core$Task$onEffects = F3(
+	function (router, commands, state) {
+		return A2(
+			_elm_lang$core$Task$map,
+			function (_p4) {
+				return {ctor: '_Tuple0'};
+			},
+			_elm_lang$core$Task$sequence(
+				A2(
+					_elm_lang$core$List$map,
+					_elm_lang$core$Task$spawnCmd(router),
+					commands)));
+	});
+var _elm_lang$core$Task$init = _elm_lang$core$Task$succeed(
+	{ctor: '_Tuple0'});
+var _elm_lang$core$Task$onSelfMsg = F3(
+	function (_p7, _p6, _p5) {
+		return _elm_lang$core$Task$succeed(
+			{ctor: '_Tuple0'});
+	});
+var _elm_lang$core$Task$command = _elm_lang$core$Native_Platform.leaf('Task');
+var _elm_lang$core$Task$Perform = function (a) {
+	return {ctor: 'Perform', _0: a};
+};
+var _elm_lang$core$Task$perform = F2(
+	function (toMessage, task) {
+		return _elm_lang$core$Task$command(
+			_elm_lang$core$Task$Perform(
+				A2(_elm_lang$core$Task$map, toMessage, task)));
+	});
+var _elm_lang$core$Task$attempt = F2(
+	function (resultToMessage, task) {
+		return _elm_lang$core$Task$command(
+			_elm_lang$core$Task$Perform(
+				A2(
+					_elm_lang$core$Task$onError,
+					function (_p8) {
+						return _elm_lang$core$Task$succeed(
+							resultToMessage(
+								_elm_lang$core$Result$Err(_p8)));
+					},
+					A2(
+						_elm_lang$core$Task$andThen,
+						function (_p9) {
+							return _elm_lang$core$Task$succeed(
+								resultToMessage(
+									_elm_lang$core$Result$Ok(_p9)));
+						},
+						task))));
+	});
+var _elm_lang$core$Task$cmdMap = F2(
+	function (tagger, _p10) {
+		var _p11 = _p10;
+		return _elm_lang$core$Task$Perform(
+			A2(_elm_lang$core$Task$map, tagger, _p11._0));
+	});
+_elm_lang$core$Native_Platform.effectManagers['Task'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Task$init, onEffects: _elm_lang$core$Task$onEffects, onSelfMsg: _elm_lang$core$Task$onSelfMsg, tag: 'cmd', cmdMap: _elm_lang$core$Task$cmdMap};
+
+//import Native.Scheduler //
+
+var _elm_lang$core$Native_Time = function() {
+
+var now = _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+{
+	callback(_elm_lang$core$Native_Scheduler.succeed(Date.now()));
+});
+
+function setInterval_(interval, task)
+{
+	return _elm_lang$core$Native_Scheduler.nativeBinding(function(callback)
+	{
+		var id = setInterval(function() {
+			_elm_lang$core$Native_Scheduler.rawSpawn(task);
+		}, interval);
+
+		return function() { clearInterval(id); };
+	});
+}
+
+return {
+	now: now,
+	setInterval_: F2(setInterval_)
+};
+
+}();
+var _elm_lang$core$Time$setInterval = _elm_lang$core$Native_Time.setInterval_;
+var _elm_lang$core$Time$spawnHelp = F3(
+	function (router, intervals, processes) {
+		var _p0 = intervals;
+		if (_p0.ctor === '[]') {
+			return _elm_lang$core$Task$succeed(processes);
+		} else {
+			var _p1 = _p0._0;
+			var spawnRest = function (id) {
+				return A3(
+					_elm_lang$core$Time$spawnHelp,
+					router,
+					_p0._1,
+					A3(_elm_lang$core$Dict$insert, _p1, id, processes));
+			};
+			var spawnTimer = _elm_lang$core$Native_Scheduler.spawn(
+				A2(
+					_elm_lang$core$Time$setInterval,
+					_p1,
+					A2(_elm_lang$core$Platform$sendToSelf, router, _p1)));
+			return A2(_elm_lang$core$Task$andThen, spawnRest, spawnTimer);
+		}
+	});
+var _elm_lang$core$Time$addMySub = F2(
+	function (_p2, state) {
+		var _p3 = _p2;
+		var _p6 = _p3._1;
+		var _p5 = _p3._0;
+		var _p4 = A2(_elm_lang$core$Dict$get, _p5, state);
+		if (_p4.ctor === 'Nothing') {
+			return A3(
+				_elm_lang$core$Dict$insert,
+				_p5,
+				{
+					ctor: '::',
+					_0: _p6,
+					_1: {ctor: '[]'}
+				},
+				state);
+		} else {
+			return A3(
+				_elm_lang$core$Dict$insert,
+				_p5,
+				{ctor: '::', _0: _p6, _1: _p4._0},
+				state);
+		}
+	});
+var _elm_lang$core$Time$inMilliseconds = function (t) {
+	return t;
+};
+var _elm_lang$core$Time$millisecond = 1;
+var _elm_lang$core$Time$second = 1000 * _elm_lang$core$Time$millisecond;
+var _elm_lang$core$Time$minute = 60 * _elm_lang$core$Time$second;
+var _elm_lang$core$Time$hour = 60 * _elm_lang$core$Time$minute;
+var _elm_lang$core$Time$inHours = function (t) {
+	return t / _elm_lang$core$Time$hour;
+};
+var _elm_lang$core$Time$inMinutes = function (t) {
+	return t / _elm_lang$core$Time$minute;
+};
+var _elm_lang$core$Time$inSeconds = function (t) {
+	return t / _elm_lang$core$Time$second;
+};
+var _elm_lang$core$Time$now = _elm_lang$core$Native_Time.now;
+var _elm_lang$core$Time$onSelfMsg = F3(
+	function (router, interval, state) {
+		var _p7 = A2(_elm_lang$core$Dict$get, interval, state.taggers);
+		if (_p7.ctor === 'Nothing') {
+			return _elm_lang$core$Task$succeed(state);
+		} else {
+			var tellTaggers = function (time) {
+				return _elm_lang$core$Task$sequence(
+					A2(
+						_elm_lang$core$List$map,
+						function (tagger) {
+							return A2(
+								_elm_lang$core$Platform$sendToApp,
+								router,
+								tagger(time));
+						},
+						_p7._0));
+			};
+			return A2(
+				_elm_lang$core$Task$andThen,
+				function (_p8) {
+					return _elm_lang$core$Task$succeed(state);
+				},
+				A2(_elm_lang$core$Task$andThen, tellTaggers, _elm_lang$core$Time$now));
+		}
+	});
+var _elm_lang$core$Time$subscription = _elm_lang$core$Native_Platform.leaf('Time');
+var _elm_lang$core$Time$State = F2(
+	function (a, b) {
+		return {taggers: a, processes: b};
+	});
+var _elm_lang$core$Time$init = _elm_lang$core$Task$succeed(
+	A2(_elm_lang$core$Time$State, _elm_lang$core$Dict$empty, _elm_lang$core$Dict$empty));
+var _elm_lang$core$Time$onEffects = F3(
+	function (router, subs, _p9) {
+		var _p10 = _p9;
+		var rightStep = F3(
+			function (_p12, id, _p11) {
+				var _p13 = _p11;
+				return {
+					ctor: '_Tuple3',
+					_0: _p13._0,
+					_1: _p13._1,
+					_2: A2(
+						_elm_lang$core$Task$andThen,
+						function (_p14) {
+							return _p13._2;
+						},
+						_elm_lang$core$Native_Scheduler.kill(id))
+				};
+			});
+		var bothStep = F4(
+			function (interval, taggers, id, _p15) {
+				var _p16 = _p15;
+				return {
+					ctor: '_Tuple3',
+					_0: _p16._0,
+					_1: A3(_elm_lang$core$Dict$insert, interval, id, _p16._1),
+					_2: _p16._2
+				};
+			});
+		var leftStep = F3(
+			function (interval, taggers, _p17) {
+				var _p18 = _p17;
+				return {
+					ctor: '_Tuple3',
+					_0: {ctor: '::', _0: interval, _1: _p18._0},
+					_1: _p18._1,
+					_2: _p18._2
+				};
+			});
+		var newTaggers = A3(_elm_lang$core$List$foldl, _elm_lang$core$Time$addMySub, _elm_lang$core$Dict$empty, subs);
+		var _p19 = A6(
+			_elm_lang$core$Dict$merge,
+			leftStep,
+			bothStep,
+			rightStep,
+			newTaggers,
+			_p10.processes,
+			{
+				ctor: '_Tuple3',
+				_0: {ctor: '[]'},
+				_1: _elm_lang$core$Dict$empty,
+				_2: _elm_lang$core$Task$succeed(
+					{ctor: '_Tuple0'})
+			});
+		var spawnList = _p19._0;
+		var existingDict = _p19._1;
+		var killTask = _p19._2;
+		return A2(
+			_elm_lang$core$Task$andThen,
+			function (newProcesses) {
+				return _elm_lang$core$Task$succeed(
+					A2(_elm_lang$core$Time$State, newTaggers, newProcesses));
+			},
+			A2(
+				_elm_lang$core$Task$andThen,
+				function (_p20) {
+					return A3(_elm_lang$core$Time$spawnHelp, router, spawnList, existingDict);
+				},
+				killTask));
+	});
+var _elm_lang$core$Time$Every = F2(
+	function (a, b) {
+		return {ctor: 'Every', _0: a, _1: b};
+	});
+var _elm_lang$core$Time$every = F2(
+	function (interval, tagger) {
+		return _elm_lang$core$Time$subscription(
+			A2(_elm_lang$core$Time$Every, interval, tagger));
+	});
+var _elm_lang$core$Time$subMap = F2(
+	function (f, _p21) {
+		var _p22 = _p21;
+		return A2(
+			_elm_lang$core$Time$Every,
+			_p22._0,
+			function (_p23) {
+				return f(
+					_p22._1(_p23));
+			});
+	});
+_elm_lang$core$Native_Platform.effectManagers['Time'] = {pkg: 'elm-lang/core', init: _elm_lang$core$Time$init, onEffects: _elm_lang$core$Time$onEffects, onSelfMsg: _elm_lang$core$Time$onSelfMsg, tag: 'sub', subMap: _elm_lang$core$Time$subMap};
+
 //import Maybe, Native.List //
 
 var _elm_lang$core$Native_Regex = function() {
@@ -9175,10 +9587,28 @@ var _evancz$elm_markdown$Markdown$Options = F4(
 		return {githubFlavored: a, defaultHighlighting: b, sanitize: c, smartypants: d};
 	});
 
-var _user$project$Types_Types$Model = F5(
-	function (a, b, c, d, e) {
-		return {route: a, showHeaderImg: b, contactFormMessage: c, contactFormEmail: d, contactFormName: e};
+var _user$project$Types_Types$Typewriter = F6(
+	function (a, b, c, d, e, f) {
+		return {toShow: a, toWrite: b, state: c, toWait: d, nextStatement: e, statements: f};
 	});
+var _user$project$Types_Types$Model = F7(
+	function (a, b, c, d, e, f, g) {
+		return {route: a, showHeaderImg: b, contactFormMessage: c, contactFormEmail: d, contactFormName: e, formSendStatus: f, typeWriter: g};
+	});
+var _user$project$Types_Types$WaitingToType = {ctor: 'WaitingToType'};
+var _user$project$Types_Types$Typing = {ctor: 'Typing'};
+var _user$project$Types_Types$Erasing = {ctor: 'Erasing'};
+var _user$project$Types_Types$Showing = {ctor: 'Showing'};
+var _user$project$Types_Types$Successful = {ctor: 'Successful'};
+var _user$project$Types_Types$NotActive = {ctor: 'NotActive'};
+var _user$project$Types_Types$Ongoing = {ctor: 'Ongoing'};
+var _user$project$Types_Types$Fail = {ctor: 'Fail'};
+var _user$project$Types_Types$TickTypewriter = function (a) {
+	return {ctor: 'TickTypewriter', _0: a};
+};
+var _user$project$Types_Types$SentFormResult = function (a) {
+	return {ctor: 'SentFormResult', _0: a};
+};
 var _user$project$Types_Types$ResetForm = {ctor: 'ResetForm'};
 var _user$project$Types_Types$SendForm = {ctor: 'SendForm'};
 var _user$project$Types_Types$ContactFormChangeEmail = function (a) {
@@ -9197,15 +9627,115 @@ var _user$project$Types_Types$NoOp = {ctor: 'NoOp'};
 
 var _user$project$Ports_Onload$headerImg = _elm_lang$core$Native_Platform.incomingPort('headerImg', _elm_lang$core$Json_Decode$bool);
 
-var _user$project$Subscriptions_Subscriptions$subscriptions = function (model) {
-	return _user$project$Ports_Onload$headerImg(_user$project$Types_Types$HeaderImgLoaded);
-};
-
 var _user$project$Ports_Firebase$sendContactInfo = _elm_lang$core$Native_Platform.outgoingPort(
 	'sendContactInfo',
 	function (v) {
 		return {contactFormMessage: v.contactFormMessage, contactFormEmail: v.contactFormEmail, contactFormName: v.contactFormName};
 	});
+var _user$project$Ports_Firebase$formResult = _elm_lang$core$Native_Platform.incomingPort('formResult', _elm_lang$core$Json_Decode$bool);
+
+var _user$project$Subscriptions_Subscriptions$subscriptions = function (model) {
+	return _elm_lang$core$Platform_Sub$batch(
+		{
+			ctor: '::',
+			_0: _user$project$Ports_Onload$headerImg(_user$project$Types_Types$HeaderImgLoaded),
+			_1: {
+				ctor: '::',
+				_0: _user$project$Ports_Firebase$formResult(_user$project$Types_Types$SentFormResult),
+				_1: {
+					ctor: '::',
+					_0: A2(_elm_lang$core$Time$every, 60 * _elm_lang$core$Time$millisecond, _user$project$Types_Types$TickTypewriter),
+					_1: {ctor: '[]'}
+				}
+			}
+		});
+};
+
+var _user$project$Update_Typewriter$erase = function (typewriter) {
+	var statementStack = _elm_lang$core$List$isEmpty(typewriter.nextStatement) ? typewriter.statements : typewriter.nextStatement;
+	var getNextStatement = function () {
+		var _p0 = _elm_lang$core$List$head(statementStack);
+		if (_p0.ctor === 'Nothing') {
+			return '';
+		} else {
+			return _p0._0;
+		}
+	}();
+	var nextList = function () {
+		var _p1 = _elm_lang$core$List$tail(statementStack);
+		if (_p1.ctor === 'Nothing') {
+			return {ctor: '[]'};
+		} else {
+			return _p1._0;
+		}
+	}();
+	var isErased = _elm_lang$core$String$isEmpty(typewriter.toShow);
+	return isErased ? _elm_lang$core$Native_Utils.update(
+		typewriter,
+		{toWrite: getNextStatement, state: _user$project$Types_Types$WaitingToType, nextStatement: nextList}) : _elm_lang$core$Native_Utils.update(
+		typewriter,
+		{
+			toShow: A2(_elm_lang$core$String$dropRight, 1, typewriter.toShow)
+		});
+};
+var _user$project$Update_Typewriter$write = function (typewriter) {
+	var popLetter = _elm_lang$core$String$uncons(typewriter.toWrite);
+	var _p2 = popLetter;
+	if (_p2.ctor === 'Just') {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{
+				toShow: A2(
+					_elm_lang$core$Basics_ops['++'],
+					typewriter.toShow,
+					_elm_lang$core$String$fromChar(_p2._0._0)),
+				toWrite: _p2._0._1
+			});
+	} else {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{state: _user$project$Types_Types$Showing});
+	}
+};
+var _user$project$Update_Typewriter$shorterWaitTime = 30;
+var _user$project$Update_Typewriter$showText = function (typewriter) {
+	var _p3 = typewriter.toWait;
+	if (_p3 === 0) {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{toWait: _user$project$Update_Typewriter$shorterWaitTime, state: _user$project$Types_Types$Erasing});
+	} else {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{toWait: _p3 - 1});
+	}
+};
+var _user$project$Update_Typewriter$waitTime = 70;
+var _user$project$Update_Typewriter$waitWith = function (typewriter) {
+	var _p4 = typewriter.toWait;
+	if (_p4 === 0) {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{toWait: _user$project$Update_Typewriter$waitTime, state: _user$project$Types_Types$Typing});
+	} else {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{toWait: _p4 - 1});
+	}
+};
+var _user$project$Update_Typewriter$update = function (typewriter) {
+	var _p5 = typewriter.state;
+	switch (_p5.ctor) {
+		case 'Typing':
+			return _user$project$Update_Typewriter$write(typewriter);
+		case 'Erasing':
+			return _user$project$Update_Typewriter$erase(typewriter);
+		case 'Showing':
+			return _user$project$Update_Typewriter$showText(typewriter);
+		default:
+			return _user$project$Update_Typewriter$waitWith(typewriter);
+	}
+};
 
 var _user$project$Update_Update$update = F2(
 	function (msg, model) {
@@ -9219,6 +9749,16 @@ var _user$project$Update_Update$update = F2(
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{contactFormName: '', contactFormEmail: '', contactFormMessage: ''}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'TickTypewriter':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{
+							typeWriter: _user$project$Update_Typewriter$update(model.typeWriter)
+						}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'HeaderImgLoaded':
@@ -9253,41 +9793,40 @@ var _user$project$Update_Update$update = F2(
 						{contactFormEmail: _p0._0}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
+			case 'SentFormResult':
+				var _p1 = _p0._0;
+				if (_p1 === true) {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{contactFormName: '', contactFormEmail: '', contactFormMessage: '', formSendStatus: _user$project$Types_Types$Successful}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				} else {
+					return {
+						ctor: '_Tuple2',
+						_0: _elm_lang$core$Native_Utils.update(
+							model,
+							{formSendStatus: _user$project$Types_Types$Fail}),
+						_1: _elm_lang$core$Platform_Cmd$none
+					};
+				}
 			default:
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
-						{contactFormName: '', contactFormEmail: '', contactFormMessage: ''}),
+						{formSendStatus: _user$project$Types_Types$Ongoing}),
 					_1: _user$project$Ports_Firebase$sendContactInfo(
 						{contactFormName: model.contactFormName, contactFormEmail: model.contactFormEmail, contactFormMessage: model.contactFormMessage})
 				};
 		}
 	});
 
-var _user$project$Utils$targetSrc = A2(
-	_elm_lang$core$Json_Decode$at,
-	{
-		ctor: '::',
-		_0: 'target',
-		_1: {
-			ctor: '::',
-			_0: 'src',
-			_1: {ctor: '[]'}
-		}
-	},
-	_elm_lang$core$Json_Decode$string);
-var _user$project$Utils$onLoadSrc = function (tagger) {
-	return A2(
-		_elm_lang$html$Html_Events$on,
-		'load',
-		A2(_elm_lang$core$Json_Decode$map, tagger, _user$project$Utils$targetSrc));
-};
-
 var _user$project$View_Header$showHeaderImg = function (model) {
 	return model.showHeaderImg ? _elm_lang$html$Html_Attributes$class('fadeinChild') : _elm_lang$html$Html_Attributes$class('');
 };
-var _user$project$View_Header$headerText = '\nI can help you research, prototype, develop and deploy your websites,\nservices, apps and products. I specialize in UX, service design and\nweb development.';
 var _user$project$View_Header$header = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -9306,7 +9845,7 @@ var _user$project$View_Header$header = function (model) {
 				_elm_lang$html$Html$img,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('center br-100 h4 mw4 mt5-ns mt4 mb3'),
+					_0: _elm_lang$html$Html_Attributes$class('center br-100 h4 mw4 mt5 mb5 '),
 					_1: {
 						ctor: '::',
 						_0: _elm_lang$html$Html_Attributes$src('img/marc.jpg'),
@@ -9320,12 +9859,12 @@ var _user$project$View_Header$header = function (model) {
 					_elm_lang$html$Html$div,
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html_Attributes$class('ls3 b f1-ns f3 lh-title tc mb5-ns mb3 pr3 pl3 pl2-ns pr3-ns'),
+						_0: _elm_lang$html$Html_Attributes$class('fw1 f1-ns f4  pa2 ls1 measure-wide lh-copy tc center b'),
 						_1: {ctor: '[]'}
 					},
 					{
 						ctor: '::',
-						_0: _elm_lang$html$Html$text('Hi, my name is Marc.'),
+						_0: _elm_lang$html$Html$text('Hi, I\'m Marc. I can help you '),
 						_1: {ctor: '[]'}
 					}),
 				_1: {
@@ -9334,12 +9873,13 @@ var _user$project$View_Header$header = function (model) {
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('fw1 f5-ns f6 ls1 measure-wide lh-copy tc-ns tj pl3 pr3 pl2-ns pr3-ns center'),
+							_0: _elm_lang$html$Html_Attributes$class('typewriter mb4 f1-ns b f4 ls1 measure-wide lh-copy tc center'),
 							_1: {ctor: '[]'}
 						},
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html$text(_user$project$View_Header$headerText),
+							_0: _elm_lang$html$Html$text(
+								A2(_elm_lang$core$Basics_ops['++'], 'with ', model.typeWriter.toShow)),
 							_1: {ctor: '[]'}
 						}),
 					_1: {
@@ -9348,7 +9888,7 @@ var _user$project$View_Header$header = function (model) {
 							_elm_lang$html$Html$a,
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$class('f5-ns mt4 o-60  center tc glow white no-underline hover greenhover mw5 pr3 pl3 ba bw1 br-pill pa2'),
+								_0: _elm_lang$html$Html_Attributes$class('f5-ns mt5-ns mt6 mb3 o-60  center tc glow white no-underline hover greenhover mw5 pr3 pl3 ba bw1 br-pill pa2'),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Attributes$href('#contact'),
@@ -9357,7 +9897,7 @@ var _user$project$View_Header$header = function (model) {
 							},
 							{
 								ctor: '::',
-								_0: _elm_lang$html$Html$text('Contact'),
+								_0: _elm_lang$html$Html$text('Get in touch'),
 								_1: {ctor: '[]'}
 							}),
 						_1: {
@@ -9366,7 +9906,7 @@ var _user$project$View_Header$header = function (model) {
 								_elm_lang$html$Html$div,
 								{
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$class('mt4 mt5-l tc mb6'),
+									_0: _elm_lang$html$Html_Attributes$class('mt5 mt5-l tc mb4'),
 									_1: {ctor: '[]'}
 								},
 								{
@@ -9392,6 +9932,7 @@ var _user$project$View_Header$header = function (model) {
 			}
 		});
 };
+var _user$project$View_Header$headerText = '\nI can help you research, prototype, develop and deploy your websites,\nservices, apps and products. I specialize in UX, service design and\nweb development.';
 var _user$project$View_Header$green = A3(_elm_lang$core$Color$rgb, 72, 177, 119);
 
 var _user$project$View_Process$process = function (model) {
@@ -9510,7 +10051,7 @@ var _user$project$View_Features$featureLeft = F2(
 	});
 var _user$project$View_Features$codeIcon = 'fas fa-code';
 var _user$project$View_Features$customizable = '\n### Have it just the way you want\n\nThe websites I create are full-stack solutions created from scratch. This means that there are\nmore possibilities in what can be done than other vendors that create\ntheir website in Wordpress and other WYIWYG editors.\n\n';
-var _user$project$View_Features$fast = '\n### Blazing fast\n\nA website that takes more than 2 seconds to load has a page abondonment of 15%\nor higher. I ensure that your website loads in less than half a second.\n\n';
+var _user$project$View_Features$fast = '\n### Blazing fast\n\nA website that takes more than 2 seconds to load has a page abondonment of 15%\nor higher. I ensure that your website loads in less than a second.\n\n';
 var _user$project$View_Features$lowMaintenance = '\n### Very low maintenance\n\nThe websites I create have very low maintenance, if any at all.\n\n';
 var _user$project$View_Features$furtherDevelopment = '\n### Reuse the backend for your mobile apps\n\nChoosing the right technology stack can be important to avoid having to\nduplicate your development in the future. The code used to create the backend\nserver used for my websites can later be reused for Android and iOS apps.\n\n';
 var _user$project$View_Features$rightDesign = '\n### Get the *right* website\n\n\nWhat I create is designed not just to look nice but also to function. My designs\nare done with the latest HCI design methods so you mitigate time and risks while\nincreasing ROI.\n';
@@ -9523,7 +10064,7 @@ var _user$project$View_Features$features = function (model) {
 			_0: _elm_lang$html$Html_Attributes$id('feature'),
 			_1: {
 				ctor: '::',
-				_0: _elm_lang$html$Html_Attributes$class('white pa3-ns pa1'),
+				_0: _elm_lang$html$Html_Attributes$class('white'),
 				_1: {
 					ctor: '::',
 					_0: _elm_lang$html$Html_Attributes$style(
@@ -9546,7 +10087,7 @@ var _user$project$View_Features$features = function (model) {
 				_elm_lang$html$Html$div,
 				{
 					ctor: '::',
-					_0: _elm_lang$html$Html_Attributes$class('mb6 w-100 center '),
+					_0: _elm_lang$html$Html_Attributes$class('pa3 w-100 center'),
 					_1: {ctor: '[]'}
 				},
 				{
@@ -9555,7 +10096,7 @@ var _user$project$View_Features$features = function (model) {
 						_elm_lang$html$Html$div,
 						{
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$class('b f3-ns f4 ls2 tc w-100 mb5 mt3'),
+							_0: _elm_lang$html$Html_Attributes$class('b f3-ns f4 ls2 tc w-100 mb5'),
 							_1: {ctor: '[]'}
 						},
 						{
@@ -9629,7 +10170,7 @@ var _user$project$View_ContactForm$contactForm = function (model) {
 						_0: _elm_lang$html$Html_Attributes$class('fl w-50-ns w-100 pa2 ba b--light-gray'),
 						_1: {
 							ctor: '::',
-							_0: _elm_lang$html$Html_Attributes$placeholder('Name'),
+							_0: _elm_lang$html$Html_Attributes$placeholder('Name*'),
 							_1: {
 								ctor: '::',
 								_0: _elm_lang$html$Html_Events$onInput(_user$project$Types_Types$ContactFormChangeName),
@@ -9651,7 +10192,7 @@ var _user$project$View_ContactForm$contactForm = function (model) {
 							_0: _elm_lang$html$Html_Attributes$class('fl w-50-ns w-100 pa2 ba b--light-gray'),
 							_1: {
 								ctor: '::',
-								_0: _elm_lang$html$Html_Attributes$placeholder('Email'),
+								_0: _elm_lang$html$Html_Attributes$placeholder('Email*'),
 								_1: {
 									ctor: '::',
 									_0: _elm_lang$html$Html_Events$onInput(_user$project$Types_Types$ContactFormChangeEmail),
@@ -9673,7 +10214,7 @@ var _user$project$View_ContactForm$contactForm = function (model) {
 								_0: _elm_lang$html$Html_Attributes$class('w-100 h4 dib v-top ba b--light-gray'),
 								_1: {
 									ctor: '::',
-									_0: _elm_lang$html$Html_Attributes$placeholder('Message'),
+									_0: _elm_lang$html$Html_Attributes$placeholder(' Message*'),
 									_1: {
 										ctor: '::',
 										_0: _elm_lang$html$Html_Events$onInput(_user$project$Types_Types$ContactFormChange),
@@ -9712,6 +10253,65 @@ var _user$project$View_ContactForm$contactForm = function (model) {
 		});
 };
 
+var _user$project$View_Projects$timelineButton = F3(
+	function (model, name, msg) {
+		return A2(
+			_elm_lang$html$Html$button,
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html_Attributes$class('w2 h2 pulse-button'),
+				_1: {ctor: '[]'}
+			},
+			{
+				ctor: '::',
+				_0: _elm_lang$html$Html$text(''),
+				_1: {ctor: '[]'}
+			});
+	});
+var _user$project$View_Projects$timeline = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('w-100 center absolute '),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A3(_user$project$View_Projects$timelineButton, model, '', _user$project$Types_Types$NoOp),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$View_Projects$projects = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{
+			ctor: '::',
+			_0: _elm_lang$html$Html_Attributes$class('mt6-ns mt4 center'),
+			_1: {ctor: '[]'}
+		},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$class('f3 center tc'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html$text('My work'),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: _user$project$View_Projects$timeline(model),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+
 var _user$project$View_View$view = function (model) {
 	return A2(
 		_elm_lang$html$Html$div,
@@ -9728,20 +10328,60 @@ var _user$project$View_View$view = function (model) {
 				_0: _user$project$View_Features$features(model),
 				_1: {
 					ctor: '::',
-					_0: _user$project$View_Process$process(model),
+					_0: _user$project$View_Projects$projects(model),
 					_1: {
 						ctor: '::',
-						_0: _user$project$View_ContactForm$contactForm(model),
-						_1: {ctor: '[]'}
+						_0: _user$project$View_Process$process(model),
+						_1: {
+							ctor: '::',
+							_0: _user$project$View_ContactForm$contactForm(model),
+							_1: {ctor: '[]'}
+						}
 					}
 				}
 			}
 		});
 };
 
+var _user$project$Main$initTypewriter = {
+	toShow: '',
+	toWrite: 'creating websites.',
+	state: _user$project$Types_Types$WaitingToType,
+	toWait: _user$project$Update_Typewriter$shorterWaitTime,
+	nextStatement: {
+		ctor: '::',
+		_0: 'UX design.',
+		_1: {
+			ctor: '::',
+			_0: 'service design.',
+			_1: {
+				ctor: '::',
+				_0: 'creating mobile apps.',
+				_1: {ctor: '[]'}
+			}
+		}
+	},
+	statements: {
+		ctor: '::',
+		_0: 'creating websites.',
+		_1: {
+			ctor: '::',
+			_0: 'UX design.',
+			_1: {
+				ctor: '::',
+				_0: 'service design.',
+				_1: {
+					ctor: '::',
+					_0: 'creating mobile apps.',
+					_1: {ctor: '[]'}
+				}
+			}
+		}
+	}
+};
 var _user$project$Main$init = {
 	ctor: '_Tuple2',
-	_0: {route: '/', showHeaderImg: false, contactFormMessage: '', contactFormName: '', contactFormEmail: ''},
+	_0: {route: '/', showHeaderImg: false, contactFormMessage: '', contactFormName: '', contactFormEmail: '', formSendStatus: _user$project$Types_Types$NotActive, typeWriter: _user$project$Main$initTypewriter},
 	_1: _elm_lang$core$Platform_Cmd$none
 };
 var _user$project$Main$main = _elm_lang$html$Html$program(

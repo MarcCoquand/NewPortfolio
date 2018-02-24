@@ -5,3 +5,4 @@ elm-stuff/*
 .firebaserc 
 elm-stuff/*
 node_modules/
+config.js

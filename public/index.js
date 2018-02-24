@@ -3,14 +3,6 @@ var node = document.getElementById('main');
 var app = Elm.Main.embed(node);
 
 // Firebase 
-var config = {
-  apiKey: "AIzaSyBlc6u3UHeMHGtp2jYEePxxWZZi2d-Knfo",
-  authDomain: "portfolio-34ea9.firebaseapp.com",
-  databaseURL: "https://portfolio-34ea9.firebaseio.com/",
-  projectId: "portfolio-34ea9",
-  storageBucket: "",
-  messagingSenderId: "349119519939"
-};
 firebase.initializeApp(config);
 var dbRef = firebase.database().ref().child("messages");
 
@@ -19,7 +11,7 @@ var dbRef = firebase.database().ref().child("messages");
 app.ports.sendContactInfo.subscribe(formInfo => {
     var ref = dbRef.push();
     ref.set(formInfo).catch(error => 
-        console.log(error))
+        app.ports.formResult.send(false)).then(() => app.ports.formResult.send(true));
 });
 
 

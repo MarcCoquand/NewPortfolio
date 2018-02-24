@@ -9,3 +9,6 @@ port sendContactInfo :
     , contactFormName : String
     }
     -> Cmd msg
+
+
+port formResult : (Bool -> msg) -> Sub msg

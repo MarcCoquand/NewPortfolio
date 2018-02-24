@@ -5,6 +5,50 @@
 .bgh { background-image: url("img/bg.jpg"); }
 .oln { outline: none; }
 
+.pulse-button {
+  position: relative;
+  border: none;
+  box-shadow: 0 0 0 0 #000;
+  border-radius: 50%;
+  border-color: #000;
+  background-color: #000;
+  background-size:cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  -webkit-animation: none;-moz-animation: none;-ms-animation: none;animation: none;
+}
+.pulse-button:hover 
+{
+  -webkit-animation: pulse 2.25s infinite cubic-bezier(0.66, 0.5, 0, 1);
+  -moz-animation: pulse 2.25s infinite cubic-bezier(0.66, 0.5, 0, 1);
+  -ms-animation: pulse 2.25s infinite cubic-bezier(0.66, 0.5, 0, 1);
+  animation: pulse 2.25s infinite cubic-bezier(0.66, 0, 0.5, 1);
+}
+
+@-webkit-keyframes pulse {to {box-shadow: 0 0 0 45px #000;}}
+@-moz-keyframes pulse {to {box-shadow: 0 0 0 45px #000;}}
+@-ms-keyframes pulse {to {box-shadow: 0 0 0 45px #000;}}
+@keyframes pulse {to {box-shadow: 0 0 0 45px #000;}}
+
+.typewriter {
+  border-right: .23rem solid white; /* The typwriter cursor */
+  white-space: nowrap; /* Keeps the content on a single line */
+  animation: 
+    blink-caret .85s step-end infinite;
+}
+
+/* The typewriter cursor effect */
+@keyframes blink-caret {
+  from, to { border-color: transparent }
+  50% { border-color: white; }
+}
+
+/* The typing effect */
+@keyframes typing {
+  from { width: 0 }
+  to { width: 70% }
+}
+
 .fadeinChild::after {
     background: url("img/bg.jpg");
     content: "";

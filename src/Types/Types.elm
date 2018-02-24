@@ -1,6 +1,30 @@
 module Types.Types exposing (..)
 
-import Html exposing (..)
+import Time exposing (..)
+
+
+type TypingState
+    = Showing
+    | Erasing
+    | Typing
+    | WaitingToType
+
+
+type alias Typewriter =
+    { toShow : String
+    , toWrite : String
+    , state : TypingState
+    , toWait : Int
+    , nextStatement : List String
+    , statements : List String
+    }
+
+
+type SendStatus
+    = Fail
+    | Ongoing
+    | NotActive
+    | Successful
 
 
 type alias Model =
@@ -9,6 +33,8 @@ type alias Model =
     , contactFormMessage : String
     , contactFormEmail : String
     , contactFormName : String
+    , formSendStatus : SendStatus
+    , typeWriter : Typewriter
     }
 
 
@@ -20,3 +46,5 @@ type Msg
     | ContactFormChangeEmail String
     | SendForm
     | ResetForm
+    | SentFormResult Bool
+    | TickTypewriter Time

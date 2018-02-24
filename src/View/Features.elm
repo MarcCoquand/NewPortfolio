@@ -70,7 +70,7 @@ fast =
 ### Blazing fast
 
 A website that takes more than 2 seconds to load has a page abondonment of 15%
-or higher. I ensure that your website loads in less than half a second.
+or higher. I ensure that your website loads in less than a second.
 
 """
 
@@ -123,9 +123,9 @@ feature feat icon =
 
 features : Model -> Html Msg
 features model =
-    div [ id "feature", class "white pa3-ns pa1", style [ ( "backgroundColor", colorToCssRgb green ) ] ]
-        [ div [ class "mb6 w-100 center " ]
-            [ div [ class "b f3-ns f4 ls2 tc w-100 mb5 mt3" ] [ text "Why you should hire me:" ]
+    div [ id "feature", class "white", style [ ( "backgroundColor", colorToCssRgb green ) ] ]
+        [ div [ class "pa3 w-100 center" ]
+            [ div [ class "b f3-ns f4 ls2 tc w-100 mb5" ] [ text "Why you should hire me:" ]
             , div [ class "flex flex-column ph3-ns ph1-m flex-row-l" ]
                 [ feature rightDesign "fas fa-3x fa-check"
                 , featureLeft fast "fas fa-rocket fa-3x"

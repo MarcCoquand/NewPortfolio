@@ -12,14 +12,14 @@ contactForm model =
         [ div [ class "f5 tc mb3" ] [ text "Let's get in touch:" ]
         , input
             [ class "fl w-50-ns w-100 pa2 ba b--light-gray"
-            , placeholder "Name"
+            , placeholder "Name*"
             , onInput Types.ContactFormChangeName
             , value model.contactFormName
             ]
             []
         , input
             [ class "fl w-50-ns w-100 pa2 ba b--light-gray"
-            , placeholder "Email"
+            , placeholder "Email*"
             , onInput
                 Types.ContactFormChangeEmail
             , value model.contactFormEmail
@@ -27,7 +27,7 @@ contactForm model =
             []
         , textarea
             [ class "w-100 h4 dib v-top ba b--light-gray"
-            , placeholder "Message"
+            , placeholder " Message*"
             , onInput Types.ContactFormChange
             , value model.contactFormMessage
             ]

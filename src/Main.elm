@@ -5,6 +5,27 @@ import Types.Types as Types exposing (..)
 import Update.Update as Update exposing (..)
 import View.View as View exposing (..)
 import Html exposing (..)
+import Update.Typewriter as Typewriter exposing (shorterWaitTime)
+
+
+initTypewriter : Types.Typewriter
+initTypewriter =
+    { toShow = ""
+    , toWrite = "creating websites."
+    , state = WaitingToType
+    , toWait = Typewriter.shorterWaitTime
+    , nextStatement =
+        [ "UX design."
+        , "service design."
+        , "creating mobile apps."
+        ]
+    , statements =
+        [ "creating websites."
+        , "UX design."
+        , "service design."
+        , "creating mobile apps."
+        ]
+    }
 
 
 init : ( Types.Model, Cmd Msg )
@@ -14,6 +35,8 @@ init =
       , contactFormMessage = ""
       , contactFormName = ""
       , contactFormEmail = ""
+      , formSendStatus = NotActive
+      , typeWriter = initTypewriter
       }
     , Cmd.none
     )
