@@ -14,14 +14,8 @@ initTypewriter =
     , toWrite = "creating websites."
     , state = WaitingToType
     , toWait = Typewriter.shorterWaitTime
-    , nextStatement =
-        [ "UX design."
-        , "service design."
-        , "creating mobile apps."
-        ]
     , statements =
-        [ "creating websites."
-        , "UX design."
+        [ "UX design."
         , "service design."
         , "creating mobile apps."
         ]

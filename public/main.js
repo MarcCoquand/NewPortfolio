@@ -9587,9 +9587,13 @@ var _evancz$elm_markdown$Markdown$Options = F4(
 		return {githubFlavored: a, defaultHighlighting: b, sanitize: c, smartypants: d};
 	});
 
-var _user$project$Types_Types$Typewriter = F6(
-	function (a, b, c, d, e, f) {
-		return {toShow: a, toWrite: b, state: c, toWait: d, nextStatement: e, statements: f};
+var _user$project$Types_Types$ContactFormInfo = F3(
+	function (a, b, c) {
+		return {contactFormMessage: a, contactFormEmail: b, contactFormName: c};
+	});
+var _user$project$Types_Types$Typewriter = F5(
+	function (a, b, c, d, e) {
+		return {toShow: a, toWrite: b, state: c, toWait: d, statements: e};
 	});
 var _user$project$Types_Types$Model = F7(
 	function (a, b, c, d, e, f, g) {
@@ -9651,34 +9655,37 @@ var _user$project$Subscriptions_Subscriptions$subscriptions = function (model) {
 		});
 };
 
-var _user$project$Update_Typewriter$erase = function (typewriter) {
-	var statementStack = _elm_lang$core$List$isEmpty(typewriter.nextStatement) ? typewriter.statements : typewriter.nextStatement;
-	var getNextStatement = function () {
-		var _p0 = _elm_lang$core$List$head(statementStack);
-		if (_p0.ctor === 'Nothing') {
-			return '';
+var _user$project$Update_Typewriter$eraseLetter = function (typewriter) {
+	if (_elm_lang$core$String$isEmpty(typewriter.toShow)) {
+		var _p0 = typewriter.statements;
+		if (_p0.ctor === '::') {
+			var _p1 = _p0._0;
+			return _elm_lang$core$Native_Utils.update(
+				typewriter,
+				{
+					toWrite: _p1,
+					state: _user$project$Types_Types$WaitingToType,
+					statements: A2(
+						_elm_lang$core$Basics_ops['++'],
+						_p0._1,
+						{
+							ctor: '::',
+							_0: _p1,
+							_1: {ctor: '[]'}
+						})
+				});
 		} else {
-			return _p0._0;
+			return typewriter;
 		}
-	}();
-	var nextList = function () {
-		var _p1 = _elm_lang$core$List$tail(statementStack);
-		if (_p1.ctor === 'Nothing') {
-			return {ctor: '[]'};
-		} else {
-			return _p1._0;
-		}
-	}();
-	var isErased = _elm_lang$core$String$isEmpty(typewriter.toShow);
-	return isErased ? _elm_lang$core$Native_Utils.update(
-		typewriter,
-		{toWrite: getNextStatement, state: _user$project$Types_Types$WaitingToType, nextStatement: nextList}) : _elm_lang$core$Native_Utils.update(
-		typewriter,
-		{
-			toShow: A2(_elm_lang$core$String$dropRight, 1, typewriter.toShow)
-		});
+	} else {
+		return _elm_lang$core$Native_Utils.update(
+			typewriter,
+			{
+				toShow: A2(_elm_lang$core$String$dropRight, 1, typewriter.toShow)
+			});
+	}
 };
-var _user$project$Update_Typewriter$write = function (typewriter) {
+var _user$project$Update_Typewriter$writeLetter = function (typewriter) {
 	var popLetter = _elm_lang$core$String$uncons(typewriter.toWrite);
 	var _p2 = popLetter;
 	if (_p2.ctor === 'Just') {
@@ -9697,8 +9704,8 @@ var _user$project$Update_Typewriter$write = function (typewriter) {
 			{state: _user$project$Types_Types$Showing});
 	}
 };
-var _user$project$Update_Typewriter$shorterWaitTime = 30;
-var _user$project$Update_Typewriter$showText = function (typewriter) {
+var _user$project$Update_Typewriter$shorterWaitTime = 20;
+var _user$project$Update_Typewriter$tickShowTimer = function (typewriter) {
 	var _p3 = typewriter.toWait;
 	if (_p3 === 0) {
 		return _elm_lang$core$Native_Utils.update(
@@ -9710,8 +9717,8 @@ var _user$project$Update_Typewriter$showText = function (typewriter) {
 			{toWait: _p3 - 1});
 	}
 };
-var _user$project$Update_Typewriter$waitTime = 70;
-var _user$project$Update_Typewriter$waitWith = function (typewriter) {
+var _user$project$Update_Typewriter$waitTime = 40;
+var _user$project$Update_Typewriter$tickBreakTimer = function (typewriter) {
 	var _p4 = typewriter.toWait;
 	if (_p4 === 0) {
 		return _elm_lang$core$Native_Utils.update(
@@ -9723,17 +9730,17 @@ var _user$project$Update_Typewriter$waitWith = function (typewriter) {
 			{toWait: _p4 - 1});
 	}
 };
-var _user$project$Update_Typewriter$update = function (typewriter) {
+var _user$project$Update_Typewriter$nextState = function (typewriter) {
 	var _p5 = typewriter.state;
 	switch (_p5.ctor) {
 		case 'Typing':
-			return _user$project$Update_Typewriter$write(typewriter);
+			return _user$project$Update_Typewriter$writeLetter(typewriter);
 		case 'Erasing':
-			return _user$project$Update_Typewriter$erase(typewriter);
+			return _user$project$Update_Typewriter$eraseLetter(typewriter);
 		case 'Showing':
-			return _user$project$Update_Typewriter$showText(typewriter);
+			return _user$project$Update_Typewriter$tickShowTimer(typewriter);
 		default:
-			return _user$project$Update_Typewriter$waitWith(typewriter);
+			return _user$project$Update_Typewriter$tickBreakTimer(typewriter);
 	}
 };
 
@@ -9743,22 +9750,22 @@ var _user$project$Update_Update$update = F2(
 		switch (_p0.ctor) {
 			case 'NoOp':
 				return {ctor: '_Tuple2', _0: model, _1: _elm_lang$core$Platform_Cmd$none};
-			case 'ResetForm':
-				return {
-					ctor: '_Tuple2',
-					_0: _elm_lang$core$Native_Utils.update(
-						model,
-						{contactFormName: '', contactFormEmail: '', contactFormMessage: ''}),
-					_1: _elm_lang$core$Platform_Cmd$none
-				};
 			case 'TickTypewriter':
 				return {
 					ctor: '_Tuple2',
 					_0: _elm_lang$core$Native_Utils.update(
 						model,
 						{
-							typeWriter: _user$project$Update_Typewriter$update(model.typeWriter)
+							typeWriter: _user$project$Update_Typewriter$nextState(model.typeWriter)
 						}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ResetForm':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{contactFormName: '', contactFormEmail: '', contactFormMessage: ''}),
 					_1: _elm_lang$core$Platform_Cmd$none
 				};
 			case 'HeaderImgLoaded':
@@ -9819,7 +9826,7 @@ var _user$project$Update_Update$update = F2(
 						model,
 						{formSendStatus: _user$project$Types_Types$Ongoing}),
 					_1: _user$project$Ports_Firebase$sendContactInfo(
-						{contactFormName: model.contactFormName, contactFormEmail: model.contactFormEmail, contactFormMessage: model.contactFormMessage})
+						A3(_user$project$Types_Types$ContactFormInfo, model.contactFormName, model.contactFormEmail, model.contactFormMessage))
 				};
 		}
 	});
@@ -10348,7 +10355,7 @@ var _user$project$Main$initTypewriter = {
 	toWrite: 'creating websites.',
 	state: _user$project$Types_Types$WaitingToType,
 	toWait: _user$project$Update_Typewriter$shorterWaitTime,
-	nextStatement: {
+	statements: {
 		ctor: '::',
 		_0: 'UX design.',
 		_1: {
@@ -10358,23 +10365,6 @@ var _user$project$Main$initTypewriter = {
 				ctor: '::',
 				_0: 'creating mobile apps.',
 				_1: {ctor: '[]'}
-			}
-		}
-	},
-	statements: {
-		ctor: '::',
-		_0: 'creating websites.',
-		_1: {
-			ctor: '::',
-			_0: 'UX design.',
-			_1: {
-				ctor: '::',
-				_0: 'service design.',
-				_1: {
-					ctor: '::',
-					_0: 'creating mobile apps.',
-					_1: {ctor: '[]'}
-				}
 			}
 		}
 	}

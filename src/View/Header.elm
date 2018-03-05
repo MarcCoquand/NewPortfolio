@@ -9,7 +9,7 @@ import Color.Convert exposing (colorToCssRgb)
 
 green : Color.Color
 green =
-    (Color.rgb 72 177 119)
+    Color.rgb 72 177 119
 
 
 headerText : String
@@ -31,7 +31,7 @@ showHeaderImg model =
 header : Model -> Html Msg
 header model =
     div
-        [ class ("white cover flex flex-column pa3-ns relative ")
+        [ class <| "white cover flex flex-column pa3-ns relative "
 
         --, style
         --[ ( "backgroundColor"
@@ -55,13 +55,12 @@ header model =
             [ class
                 """fw1 f1-ns f4  pa2 ls1 measure-wide lh-copy tc center b"""
             ]
-            [ text "Hi, I'm Marc. I can help you "
-            ]
+            [ text "Hi, I'm Marc. I can help you " ]
         , div
             [ class
                 """typewriter mb4 f1-ns b f4 ls1 measure-wide lh-copy tc center"""
             ]
-            [ text ("with " ++ model.typeWriter.toShow) ]
+            [ text <| "with " ++ model.typeWriter.toShow ]
         , a
             [ class
                 """f5-ns mt5-ns mt6 mb3 o-60  center tc glow white no-underline hover greenhover mw5 pr3 pl3 ba bw1 br-pill pa2"""

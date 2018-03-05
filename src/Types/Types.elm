@@ -10,12 +10,18 @@ type TypingState
     | WaitingToType
 
 
+type alias ContactFormInfo =
+    { contactFormMessage : String
+    , contactFormEmail : String
+    , contactFormName : String
+    }
+
+
 type alias Typewriter =
     { toShow : String
     , toWrite : String
     , state : TypingState
     , toWait : Int
-    , nextStatement : List String
     , statements : List String
     }
 

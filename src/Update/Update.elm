@@ -14,17 +14,17 @@ update msg model =
         NoOp ->
             ( model, Cmd.none )
 
+        TickTypewriter _ ->
+            ( { model | typeWriter = Typewriter.nextState model.typeWriter }
+            , Cmd.none
+            )
+
         ResetForm ->
             ( { model
                 | contactFormName = ""
                 , contactFormEmail = ""
                 , contactFormMessage = ""
               }
-            , Cmd.none
-            )
-
-        TickTypewriter _ ->
-            ( { model | typeWriter = (Typewriter.update model.typeWriter) }
             , Cmd.none
             )
 
@@ -57,9 +57,9 @@ update msg model =
 
         SendForm ->
             ( { model | formSendStatus = Ongoing }
-            , Firebase.sendContactInfo
-                { contactFormName = model.contactFormName
-                , contactFormEmail = model.contactFormEmail
-                , contactFormMessage = model.contactFormMessage
-                }
+            , Types.ContactFormInfo
+                model.contactFormName
+                model.contactFormEmail
+                model.contactFormMessage
+                |> Firebase.sendContactInfo
             )

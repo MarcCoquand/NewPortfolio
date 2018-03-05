@@ -2,7 +2,7 @@
 .ls3 { letter-spacing: 0.3rem; }
 .ls2 { letter-spacing: 0.2rem; }
 .ls1 { letter-spacing: 0.1rem; }
-.bgh { background-image: url("img/bg.jpg"); }
+.bgh { background-image: url("img/bg2.jpg"); }
 .oln { outline: none; }
 
 .pulse-button {
@@ -50,7 +50,7 @@
 }
 
 .fadeinChild::after {
-    background: url("img/bg.jpg");
+    background: url("img/bg2.jpg");
     content: "";
     top: 0;
     left: 0;

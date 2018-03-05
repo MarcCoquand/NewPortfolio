@@ -1,4 +1,4 @@
-module Update.Typewriter exposing (..)
+module Update.Typewriter exposing (waitTime, shorterWaitTime, nextState)
 
 import Types.Types exposing (..)
 
@@ -8,7 +8,7 @@ import Types.Types exposing (..)
 
 waitTime : Int
 waitTime =
-    70
+    40
 
 
 
@@ -17,11 +17,11 @@ waitTime =
 
 shorterWaitTime : Int
 shorterWaitTime =
-    30
+    20
 
 
-write : Typewriter -> Typewriter
-write typewriter =
+writeLetter : Typewriter -> Typewriter
+writeLetter typewriter =
     let
         popLetter =
             String.uncons typewriter.toWrite
@@ -36,40 +36,19 @@ write typewriter =
                 { typewriter | state = Showing }
 
 
-erase : Typewriter -> Typewriter
-erase typewriter =
-    if typewriter.toShow |> String.isEmpty then
-        let
-            -- Makes sure to reset the stack of sentences if they have all
-            -- been shown, otherwise just continues with the current stack
-            statementStack =
-                if typewriter.nextStatement |> List.isEmpty then
-                    typewriter.statements
-                else
-                    typewriter.nextStatement
+eraseLetter : Typewriter -> Typewriter
+eraseLetter typewriter =
+    if String.isEmpty typewriter.toShow then
+        case typewriter.statements of
+            head :: tail ->
+                { typewriter
+                    | toWrite = head
+                    , state = WaitingToType
+                    , statements = tail ++ [ head ]
+                }
 
-            popStatementStack =
-                case statementStack |> List.head of
-                    Nothing ->
-                        ""
-
-                    Just a ->
-                        a
-
-            -- The rest of the list of statements that haven't been shown
-            statementTail =
-                case statementStack |> List.tail of
-                    Nothing ->
-                        []
-
-                    Just a ->
-                        a
-        in
-            { typewriter
-                | toWrite = popStatementStack
-                , state = WaitingToType
-                , nextStatement = statementTail
-            }
+            otherwise ->
+                typewriter
     else
         { typewriter | toShow = String.dropRight 1 typewriter.toShow }
 
@@ -78,8 +57,8 @@ erase typewriter =
 -- A small pause before erasing the word so people can read what is written
 
 
-showText : Typewriter -> Typewriter
-showText typewriter =
+tickShowTimer : Typewriter -> Typewriter
+tickShowTimer typewriter =
     case typewriter.toWait of
         0 ->
             { typewriter | toWait = shorterWaitTime, state = Erasing }
@@ -92,8 +71,8 @@ showText typewriter =
 -- A small pause before starting to type out the next word
 
 
-waitWith : Typewriter -> Typewriter
-waitWith typewriter =
+tickBreakTimer : Typewriter -> Typewriter
+tickBreakTimer typewriter =
     case typewriter.toWait of
         0 ->
             { typewriter | toWait = waitTime, state = Typing }
@@ -102,17 +81,17 @@ waitWith typewriter =
             { typewriter | toWait = n - 1 }
 
 
-update : Typewriter -> Typewriter
-update typewriter =
+nextState : Typewriter -> Typewriter
+nextState typewriter =
     case typewriter.state of
         Typing ->
-            write typewriter
+            writeLetter typewriter
 
         Erasing ->
-            erase typewriter
+            eraseLetter typewriter
 
         Showing ->
-            showText typewriter
+            tickShowTimer typewriter
 
         WaitingToType ->
-            waitWith typewriter
+            tickBreakTimer typewriter

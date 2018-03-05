@@ -18,4 +18,4 @@ app.ports.sendContactInfo.subscribe(formInfo => {
 // Don't show image before loading
 var headerImg = new Image();
 headerImg.addEventListener('load', () => {app.ports.headerImg.send(true)}, false);
-headerImg.src = "img/bg.jpg";
+headerImg.src = "img/bg2.jpg";
